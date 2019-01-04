@@ -10,48 +10,68 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.*;
 import java.util.List;
+import java.util.function.Consumer;
 
 @Repository
 @Transactional
-//TODO как вообще мне понять что выполняется транзакционность?
+//TODO не смог настроить транзакции через спринг. делал в ручную..
+//TODO КАК? Если убираю ручные транзакции то при нажатии клавиш ничего не происходит
 public class UserDaoHibernateImpl implements UserDao {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private  EntityManagerFactory entityManagerFactory;
+    private  EntityManager em;
 
-    protected Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
-    }
 
     @Override
     public void addUser(User application) {
-        getCurrentSession().persist(application);
+        em = entityManagerFactory.createEntityManager();
+        executeInsideTransaction(entityManager -> entityManager.persist(application));
+
     }
 
     @Override
     public void deleteUser(int userId) {
-        getCurrentSession().delete(getUserById(userId));
+       executeInsideTransaction(entityManager -> em.remove(getUserById(userId)));
+
     }
 
     @Override
     public void updateUser(User application) {
-        getCurrentSession().update(application);
+        executeInsideTransaction(entityManager -> em.merge(application));
+
     }
 
     @Override
     public List<User> getAllUsers() {
-        Criteria criteria = getCurrentSession().createCriteria(User.class);
-        return (List<User>) criteria.list();
+        em = entityManagerFactory.createEntityManager();
+
+        return em.createQuery("FROM " + User.class.getName()).getResultList();
+
     }
 
     @Override
     public User getUserById(int userId) {
-        return (User) getCurrentSession().load(User.class, userId);
+        return (User)em.find(User.class, userId);
     }
 
     @Override
     public User getUserByLogin(String login) {
         return null;
+    }
+
+    private void executeInsideTransaction(Consumer<EntityManager> action) {
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            action.accept(em);
+            tx.commit();
+        }
+        catch (RuntimeException e) {
+            tx.rollback();
+            throw e;
+        }
     }
 }

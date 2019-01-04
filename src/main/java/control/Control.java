@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import service.UserServiсe;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -17,21 +18,21 @@ import java.util.List;
 public class Control {
     //Аннотация @Autowired неявно внедряет объектную зависимость.
     @Autowired
-    private UserDao UserServiceImpl;
+    private UserServiсe UserServiceImpl;
 
     //он создает базовый URI, для которого будет использоваться контроллер
     @RequestMapping(value = "/")
     public ModelAndView listContact(ModelAndView model) {
         List<User> listContact = UserServiceImpl.getAllUsers();
         model.addObject("listContact", listContact);
-        //TODO при ревью перейди на страницы home , там херня про инкапусляцию
+        //TODO при ревью перейди на страницы home , там про инкапусляцию
         model.setViewName("home");
         return model;
     }
 
     @RequestMapping(value = "/admin/add", method = RequestMethod.GET)
-    public ModelAndView addUser() {
-        return new ModelAndView("add");
+    public String addUser() {
+        return "add";
     }
 
     @RequestMapping(value = "/admin/addUser", method = RequestMethod.POST)
