@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Task_6.1_Spring_Hibernate" />
+        <module name="Task_7_SpSec_JPA" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Task_7_SpSec_JPA" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

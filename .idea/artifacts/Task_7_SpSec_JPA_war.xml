@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Task_7_SpSec_JPA:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="Task_7_SpSec_JPA-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Task_7_SpSec_JPA:war exploded" />
+    </root>
+  </artifact>
+</component>
