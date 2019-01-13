@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Task_7_SpSec_JPA.iml" filepath="$PROJECT_DIR$/Task_7_SpSec_JPA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task_8_Spring boot+ html+themse.iml" filepath="$PROJECT_DIR$/Task_8_Spring boot+ html+themse.iml" />
       <module fileurl="file://$PROJECT_DIR$/src/main/main.iml" filepath="$PROJECT_DIR$/src/main/main.iml" />
     </modules>
   </component>
